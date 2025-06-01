@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redirection...</title>
+    <meta charset="UTF-8" />
+    <script>
+      // Récupère le paramètre "ref" depuis l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const ref = urlParams.get("ref");
+
+      // Calcule le mois en cours (au format YYYY-MM)
+      const now = new Date();
+      const month = now.toISOString().slice(0, 7); // "2025-06"
+
+      // Construit le lien Calendly avec ref et month
+      const redirectURL = `https://calendly.com/acf-xavier/webinaire-live?ref=${ref}&month=${month}`;
+
+      // Envoie à Make (optionnel)
+      fetch("https://hook.eu1.make.com/70f4w3gksrcghh6j4qhplgvxl4hpukpy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ref: ref,
+          type: "clic",
+          timestamp: new Date().toISOString()
+        })
+      });
+
+      // Redirige automatiquement
+      window.location.href = redirectURL;
+    </script>
+  </head>
+  <body>
+    <p>Redirection vers Calendly...</p>
+  </body>
+</html>
